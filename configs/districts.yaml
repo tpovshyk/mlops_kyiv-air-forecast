@@ -1,0 +1,16 @@
+# Довідник районів Києва для SaveEcoBot.
+# ID узято з назв завантажених файлів: saveecobot_city_district_<ID>_hourly.csv
+# Відповідність перевірено вручну на сторінках районів saveecobot.com (09.11.2026).
+source: saveecobot.com
+license: CC BY 4.0
+districts:
+  - {id: 95,  name: Голосіївський,  slug: holosiivskyi}
+  - {id: 96,  name: Дарницький,     slug: darnytskyi}
+  - {id: 97,  name: Деснянський,    slug: desnianskyi}
+  - {id: 98,  name: Дніпровський,   slug: dniprovskyi}
+  - {id: 99,  name: Оболонський,    slug: obolonskyi}
+  - {id: 100, name: Печерський,     slug: pecherskyi}
+  - {id: 101, name: Подільський,    slug: podilskyi}
+  - {id: 102, name: Святошинський,  slug: sviatoshynskyi}
+  - {id: 103, name: Солом'янський,  slug: solomianskyi}
+  - {id: 104, name: Шевченківський, slug: shevchenkivskyi}

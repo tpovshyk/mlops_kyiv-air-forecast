@@ -1,0 +1,35 @@
+# --- Дані: у Git не зберігаються, версіонуються через DVC (з Lab 2) ---
+# Ігноруємо весь вміст data/, але дозволяємо файли-вказівники DVC (*.dvc),
+# щоб у Lab 2 їх можна було закомітити без змін цього файлу.
+data/**
+!data/**/
+!data/**/*.dvc
+!data/**/.gitignore
+
+# --- Секрети ---
+.env
+.env.*
+!.env.example
+
+# --- Python ---
+.venv/
+__pycache__/
+*.py[cod]
+.ruff_cache/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# --- Артефакти інструментів (локальні запуски) ---
+mlruns/
+mlartifacts/
+logs/
+
+# --- macOS та редактори ---
+.DS_Store
+.idea/
+.vscode/
+
+# --- R / RStudio ---
+.Rhistory
+.RData
+.Rproj.user/

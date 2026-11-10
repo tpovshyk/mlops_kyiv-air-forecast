@@ -1,0 +1,9 @@
+# Той самий ruff, що й у `make lint` (версія з uv.lock).
+repos:
+  - repo: local
+    hooks:
+      - id: ruff
+        name: ruff
+        entry: uv run ruff check
+        language: system
+        types_or: [python, pyi]

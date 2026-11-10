@@ -1,0 +1,21 @@
+[project]
+name = "kyiv-air-forecast"
+version = "0.1.0"
+description = "Прогноз PM2.5 на 24 години для районів Києва (курс MLOps, KSE)"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = []
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+# E/F — помилки й стиль, I — порядок імпортів, B — типові баги, UP — сучасний синтаксис
+select = ["E", "F", "I", "B", "UP"]
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.7.0",
+    "ruff>=0.17.4",
+]
