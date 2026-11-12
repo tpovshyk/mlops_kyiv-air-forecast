@@ -2,7 +2,7 @@
 -include .env
 export
 
-.PHONY: setup lint hooks up down ps logs backfill counts snapshot train register reproduce
+.PHONY: setup lint hooks up down ps logs backfill counts snapshot train register reproduce cleaning-stats
 
 setup:
 	uv sync
@@ -54,3 +54,7 @@ register:
 # make reproduce VERSION=1 (без VERSION — версія з позначкою champion)
 reproduce:
 	PYTHONPATH=src uv run python -m kyiv_air.reproduce $(if $(VERSION),--version $(VERSION),--alias champion)
+
+# make cleaning-stats — скільки рядків зачепило кожне правило очищення
+cleaning-stats:
+	PYTHONPATH=src uv run python -m kyiv_air.cleaning_stats

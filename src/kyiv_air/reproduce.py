@@ -5,7 +5,7 @@
 3. Завантажує з DVC-remote саме той знімок ознак і перевіряє, що його хеш = data_hash.
 4. Навчає заново й порівнює MAE з оригіналом у межах допуску.
 
-Запуск: make reproduce VERSION=1   (або ALIAS=champion)
+Запуск: make reproduce (версія champion) або make reproduce VERSION=1
 """
 
 import argparse
@@ -44,7 +44,8 @@ def main() -> None:
     reference = client.get_run(mv.run_id).data.metrics["model_mae"]
     print(f"Версія {mv.version}: git_commit={commit[:8]} data_hash={data_hash} MAE={reference:.4f}")
 
-    workdir = Path(tempfile.mkdtemp(prefix="kyiv_air_repro_")) / "repo"
+    # resolve(): на macOS /var — це посилання на /private/var, і DVC плутається в шляхах.
+    workdir = Path(tempfile.mkdtemp(prefix="kyiv_air_repro_")).resolve() / "repo"
     env = {**os.environ,
            "AWS_ACCESS_KEY_ID": os.environ["MINIO_ROOT_USER"],
            "AWS_SECRET_ACCESS_KEY": os.environ["MINIO_ROOT_PASSWORD"],
@@ -52,10 +53,12 @@ def main() -> None:
     env.pop("VIRTUAL_ENV", None)
     try:
         run(["git", "worktree", "add", "--detach", str(workdir), commit], settings.ROOT)
-        snapshot_dvc = workdir / SNAPSHOT_DVC.relative_to(settings.ROOT)
-        if dvc_hash(snapshot_dvc) != data_hash:
+        rel_dvc = SNAPSHOT_DVC.relative_to(settings.ROOT)
+        if dvc_hash(workdir / rel_dvc) != data_hash:
             raise SystemExit(f"У коміті {commit[:8]} інший знімок даних, ніж у тезі data_hash")
-        run(["uv", "run", "--frozen", "dvc", "pull", str(snapshot_dvc)], workdir, env)
+        run(["uv", "run", "--frozen", "dvc", "pull", str(rel_dvc)], workdir, env)
+        if not (workdir / rel_dvc.with_suffix("")).exists():
+            raise SystemExit("Після dvc pull знімка немає: перевір, що MinIO запущено")
         out = workdir / "repro_metrics.json"
         run(["uv", "run", "--frozen", "python", "-m", "kyiv_air.train",
              "--run-name", f"reproduce-v{mv.version}", "--tag", f"reproduces_version={mv.version}",
