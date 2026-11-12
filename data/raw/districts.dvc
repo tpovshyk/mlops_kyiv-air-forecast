@@ -1,0 +1,6 @@
+outs:
+- md5: 4a5036e3ee04fe6129be7d4f42af5f36.dir
+  size: 44538021
+  nfiles: 10
+  hash: md5
+  path: districts

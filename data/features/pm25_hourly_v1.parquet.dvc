@@ -1,0 +1,5 @@
+outs:
+- md5: 0cf20624fadeaa20a4223d745a38bc5d
+  size: 13817818
+  hash: md5
+  path: pm25_hourly_v1.parquet
